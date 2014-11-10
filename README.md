@@ -17,7 +17,7 @@ De novidades, temos:
 * SQLite 3
 
 ### Requisitos de instalação ###
-* Linux
+## Linux ##
 Primeiro, instale o *virtualenv* para python 2.x:
 ```
 $ sudo apt-get install python-virtualenv
