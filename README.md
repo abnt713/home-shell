@@ -17,13 +17,19 @@ De novidades, temos:
 ### Requisitos de instalação ###
 #### Linux ####
 Primeiro, instale o *virtualenv* para python 2.x:
-```$ sudo apt-get install python-virtualenv```
+```
+$ sudo apt-get install python-virtualenv
+```
 
 Em seguida, modifique a permissão do arquivo *setup.py* para que possa ser executado:
-```$ sudo chmod +x setup.py```
+```
+$ sudo chmod +x setup.py
+```
 
 Por fim, execute o arquivo
-```$ ./setup.sh```
+```
+$ ./setup.sh
+```
 
 Tudo certo! Você já pode executar o Home Shell
 
@@ -73,4 +79,7 @@ $ ./app.py
 ```
 
 #### Windows ####
-* Execute a aplicação por meio do script ```venv\Scripts\python app.py```
+* Execute a aplicação por meio do script 
+```
+PS C:\> venv\Scripts\python app.py
+```
