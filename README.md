@@ -14,7 +14,6 @@ Estamos utilizando tecnologias mais portáveis para o desenvolvimento, de modo a
 De novidades, temos:
 * Python 2.7
   * Virtualenv
-  * Flask
 * SQLite 3
 
 ### Requisitos de instalação ###
