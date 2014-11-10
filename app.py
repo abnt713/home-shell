@@ -29,7 +29,7 @@ api.add_resource(ApplianceResource, '/appliances/<int:appliance_id>/', endpoint=
 
 # Services
 api.add_resource(ListServicesResource, '/appliances/<int:appliance_id>/services/')
-api.add_resource(ServiceResource, '/appliances/<int:appliance_id>/services/<int:service_id>/')
+api.add_resource(ServiceResource, '/appliances/<int:appliance_id>/services/<service_id>/')
 
 # Status
 api.add_resource(ListStatusResource, '/appliances/<int:appliance_id>/status/')

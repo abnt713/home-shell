@@ -13,6 +13,7 @@ class ApplianceDAO(basedao.BaseDAO):
         appliance = HomeShellAppliance()
 
         appliance.id = entity_row['appliance_id']
+        appliance.package = entity_row['package']
         appliance.type = entity_row['type']
         appliance.name = entity_row['type']
         appliance.key = None

@@ -4,7 +4,7 @@ import flask
 import flask_restful
 import src.res.connector as connector
 
-import src.dao.appliancedao as appliancedao
+import src.dao.fullappliancedao as appliancedao
 import src.answer.answer
 
 
@@ -13,7 +13,7 @@ class ApplianceListResource(flask_restful.Resource):
     def get(self):
 
         connection = connector.getcon()
-        dao = appliancedao.ApplianceDAO(connection)
+        dao = appliancedao.FullApplianceDAO(connection)
 
         appliances = dao.list()
         reply = src.answer.answer.Answer()

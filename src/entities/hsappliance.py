@@ -7,6 +7,7 @@ class HomeShellAppliance(parsable.ArrayParsableEntity):
 
     def __init__(self):
         self.id = 0
+        self.package = None
         self.key = None
         self.type = None
         self.name = None
@@ -17,6 +18,7 @@ class HomeShellAppliance(parsable.ArrayParsableEntity):
     def to_array(self):
         return {
             'id': self.id,
+            'package': self.package,
             'type': self.type,
             'name': self.name
         }
