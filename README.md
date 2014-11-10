@@ -17,17 +17,11 @@ De novidades, temos:
 ### Requisitos de instalação ###
 #### Linux ####
 Primeiro, instale o *virtualenv* para python 2.x:
-```
-$ sudo apt-get install python-virtualenv
-```
+```$ sudo apt-get install python-virtualenv```
 Em seguida, modifique a permissão do arquivo *setup.py* para que possa ser executado:
-```
-$ sudo chmod +x setup.py
-```
+```$ sudo chmod +x setup.py```
 Por fim, execute o arquivo
-```
-$ ./setup.sh
-```
+```$ ./setup.sh```
 
 Tudo certo! Você já pode executar o Home Shell
 
@@ -44,13 +38,10 @@ Tudo certo! Você já pode executar o Home Shell
 * Instalando **Pip**
   * Baixe o arquivo [get-pip.py](https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py)
   * Execute o arquivo baixado usando o comando (tenha certeza de estar no diretório correto)
-```
-C:\> python get-pip.py
-```
+```PS C:\> python get-pip.py```
+
   * Caso queira verificar se a instalação funcionou, execute
-```
-C:\> pip
-```
+```PS C:\> pip```
 
 * Instalando **python-virtualenv**
   * Execute o comando
@@ -61,13 +52,14 @@ PS C:\> pip install virtualenvwrapper-powershell
 
 ### Executando ###
 
+#### Linux ####
 Modifique as permissões do arquivo *app.py*
-
-```
-$ sudo chmod +x app.py
-```
+```$ sudo chmod +x app.py```
 
 Agora, execute o arquivo
-```
-$ ./app.py
-```
+```$ ./app.py```
+
+#### Windows ####
+* Execute o arquivo ```setup.bat```
+* Em seguida, abra a aplicação pelo comando
+```venv\Scripts\python app.py```
