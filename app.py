@@ -1,4 +1,4 @@
-#!homeshell/bin/python
+#!venv/bin/python
 __author__ = 'alisonbento'
 
 import flask
