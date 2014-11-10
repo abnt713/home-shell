@@ -17,5 +17,34 @@ De novidades, temos:
   * Flask
 * SQLite 3
 
+### Requisitos de instalação ###
+* Linux
+Primeiro, instale o *virtualenv* para python 2.x:
+```
+$ sudo apt-get install python-virtualenv
+```
 
+Em seguida, modifique a permissão do arquivo *setup.py* para que possa ser executado:
+```
+$ sudo chmod +x setup.py
+```
 
+Por fim, execute o arquivo
+```
+$ ./setup.sh
+```
+
+Tudo certo! Você já pode executar o Home Shell
+
+### Executando ###
+
+Modifique as permissões do arquivo *app.py*
+
+```
+$ sudo chmod +x app.py
+```
+
+Agora, execute o arquivo
+```
+$ ./app.py
+```
