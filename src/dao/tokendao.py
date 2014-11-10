@@ -1,13 +1,13 @@
 __author__ = 'alisonbento'
 
-import abstractdao
+import basedao
 from src.entities.token.hstoken import HomeShellToken
 
 
-class TokenDAO(abstractdao.AbstractDAO):
+class TokenDAO(basedao.BaseDAO):
 
     def __init__(self, connection):
-        abstractdao.AbstractDAO.__init__(self, connection, 'hs_tokens', 'token_id')
+        basedao.BaseDAO.__init__(self, connection, 'hs_tokens', 'token_id')
 
     def insert(self, entity):
         cursor = self.connection.cursor()
@@ -23,6 +23,19 @@ class TokenDAO(abstractdao.AbstractDAO):
         cursor.execute(sql, entity_tuple)
 
         return cursor.lastrowid
+
+    def update(self, entity):
+        cursor = self.connection.cursor()
+
+        sql = "UPDATE " + self.table + " SET user_id = :user_id, token = :token, valid= :valid"
+        sql += " WHERE token_id = :token_id"
+
+        cursor.execute(sql, {
+            'user_id': entity.user_id,
+            'token': entity.token,
+            'valid': entity.valid,
+            'token_id': entity.id
+        })
 
     def convert_row_to_object(self, entity_row):
         token = HomeShellToken()

@@ -1,13 +1,13 @@
 __author__ = 'alisonbento'
 
-import abstractdao
+import basedao
 from src.entities.hsservice import HomeShellService
 
 
-class ServiceDAO(abstractdao.AbstractDAO):
+class ServiceDAO(basedao.BaseDAO):
 
     def __init__(self, connection):
-        abstractdao.AbstractDAO.__init__(self, connection, 'hs_appliance_services', 'service_id')
+        basedao.BaseDAO.__init__(self, connection, 'hs_appliance_services', 'service_id')
 
     def convert_row_to_object(self, entity_row):
         service = HomeShellService()

@@ -1,13 +1,13 @@
 __author__ = 'alisonbento'
 
-import abstractdao
+import basedao
 from src.entities.hsuser import HomeShellUser
 
 
-class UserDAO(abstractdao.AbstractDAO):
+class UserDAO(basedao.BaseDAO):
 
     def __init__(self, connection):
-        abstractdao.AbstractDAO.__init__(self, connection, 'hs_users', 'user_id')
+        basedao.BaseDAO.__init__(self, connection, 'hs_users', 'user_id')
 
     def convert_row_to_object(self, entity_row):
         user = HomeShellUser()

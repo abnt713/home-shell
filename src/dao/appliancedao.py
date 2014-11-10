@@ -1,13 +1,13 @@
 __author__ = 'alisonbento'
 
-import abstractdao
+import basedao
 from src.entities.hsappliance import HomeShellAppliance
 
 
-class ApplianceDAO(abstractdao.AbstractDAO):
+class ApplianceDAO(basedao.BaseDAO):
 
     def __init__(self, connection):
-        abstractdao.AbstractDAO.__init__(self, connection, 'hs_appliances', 'appliance_id')
+        basedao.BaseDAO.__init__(self, connection, 'hs_appliances', 'appliance_id')
 
     def convert_row_to_object(self, entity_row):
         appliance = HomeShellAppliance()

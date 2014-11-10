@@ -1,13 +1,13 @@
 __author__ = 'alisonbento'
 
-import abstractdao
+import basedao
 from src.entities.hsstatus import HomeShellStatus
 
 
-class StatusDAO(abstractdao.AbstractDAO):
+class StatusDAO(basedao.BaseDAO):
 
     def __init__(self, connection):
-        abstractdao.AbstractDAO.__init__(self, connection, 'hs_appliance_status', 'status_id')
+        basedao.BaseDAO.__init__(self, connection, 'hs_appliance_status', 'status_id')
 
     def convert_row_to_object(self, entity_row):
         status = HomeShellStatus()

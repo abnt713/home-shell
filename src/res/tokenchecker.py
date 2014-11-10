@@ -6,9 +6,8 @@ import configs
 from src.dao.tokendao import TokenDAO
 
 
-def check_token(token):
+def check_token(token, connection):
 
-    connection = connector.getcon()
     tokendao = TokenDAO(connection)
 
     tokens = tokendao.select("token = ?", (token,))
@@ -19,6 +18,14 @@ def check_token(token):
         current_time = datetime.datetime.now()
         valid_time = datetime.datetime.strptime(token.valid, configs.DATABASE_DATE_FORMAT)
 
-        return current_time < valid_time
+        if current_time > valid_time:
+            return None
+        else:
+            newvalidtime = current_time + datetime.timedelta(minutes=configs.TOKEN_VALID_TIME)
+            token.valid = newvalidtime.strftime(configs.DATABASE_DATE_FORMAT)
+            tokendao.update(token)
 
-    return False
+            connection.commit()
+
+            return token
+    return None
