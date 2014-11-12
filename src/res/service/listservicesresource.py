@@ -4,7 +4,7 @@ __author__ = 'alisonbento'
 import flask_restful
 import flask
 
-import src.hsstatus as _status
+import src.resstatus as _status
 import src.res.connector as connector
 
 from src.dao.servicedao import ServiceDAO
@@ -33,4 +33,4 @@ class ListServicesResource(flask_restful.Resource):
             reply.set_status(_status.STATUS_GENERAL_ERROR)
 
         connection.close()
-        return flask.jsonify(reply.to_array())
+        return reply.to_array()

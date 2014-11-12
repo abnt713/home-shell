@@ -4,7 +4,7 @@ import flask
 
 import flask_restful
 
-import src.hsstatus as _status
+import src.resstatus as _status
 import src.res.connector as connector
 from src.dao.statusdao import StatusDAO
 from src.answer.answer import Answer
@@ -26,4 +26,4 @@ class StatusResource(flask_restful.Resource):
             reply.add_content('status', status.to_array())
 
         connection.close()
-        return flask.jsonify(reply.to_array())
+        return reply.to_array()

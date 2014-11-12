@@ -31,14 +31,14 @@ class BaseDAO(abstractdao.AbstractDAO):
 
         return all_entities
 
-    def get(self, entity_id, criteria=None):
+    def get(self, entity_id, criteria=None, arguments=()):
         cursor = self.connection.cursor()
 
         sql = "SELECT * FROM " + str(self.table) + " WHERE " + str(self.primary_key) + " = " + str(entity_id)
 
         if criteria is not None:
             sql += " AND " + str(criteria)
-            cursor.execute(sql)
+            cursor.execute(sql, arguments)
         else:
             cursor.execute(sql)
 

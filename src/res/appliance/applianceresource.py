@@ -1,12 +1,11 @@
 __author__ = 'alisonbento'
 
-import flask
 import flask_restful
 
 import src.res.connector as connector
 import src.dao.fullappliancedao as fullappliancedao
 import src.answer.answer as hs_answer
-import src.hsstatus as _status
+import src.resstatus as _status
 
 
 class ApplianceResource(flask_restful.Resource):
@@ -27,4 +26,4 @@ class ApplianceResource(flask_restful.Resource):
             reply.add_content('appliance', appliance.to_array())
 
         connection.close()
-        return flask.jsonify(reply.to_array())
+        return reply.to_array()

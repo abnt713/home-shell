@@ -12,7 +12,5 @@ class HomeShellStatus(parsable.ArrayParsableEntity):
 
     def to_array(self):
         return {
-            'id': self.id,
-            'name': self.name,
-            'value': self.value
+            self.name: self.value
         }

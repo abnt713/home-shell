@@ -7,7 +7,7 @@ import uuid
 import datetime
 
 import src.answer.answer
-import src.hsstatus as _status
+import src.resstatus as _status
 import src.res.connector as connector
 
 import src.dao.userdao as userdao
@@ -21,10 +21,13 @@ import configs
 class RequestTokenResource(flask_restful.Resource):
 
     def get(self):
+        authtoken = flask_restful.request.args.get('authtoken')
+
+
         reply = src.answer.answer.Answer()
 
         reply.set_status(_status.STATUS_INVALID_REQUEST)
-        return flask.jsonify(reply.to_array())
+        return reply.to_array()
 
     def post(self):
         username = flask_restful.request.form.get('username')
@@ -33,7 +36,7 @@ class RequestTokenResource(flask_restful.Resource):
         reply = src.answer.answer.Answer()
         if username is None or password is None:
             reply.set_status(_status.STATUS_INCORRECT_ARGS)
-            return flask.jsonify(reply.to_array())
+            return reply.to_array()
 
         connection = connector.getcon()
         dao = userdao.UserDAO(connection)

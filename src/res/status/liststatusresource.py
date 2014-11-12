@@ -4,7 +4,7 @@ import flask
 
 import flask_restful
 
-import src.hsstatus as _status
+import src.resstatus as _status
 import src.res.connector
 from src.dao.statusdao import StatusDAO
 from src.answer.answer import Answer
@@ -32,4 +32,4 @@ class ListStatusResource(flask_restful.Resource):
             reply.set_status(_status.STATUS_GENERAL_ERROR)
 
         connection.close()
-        return flask.jsonify(reply.to_array())
+        return reply.to_array()

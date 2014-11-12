@@ -5,7 +5,7 @@ import flask_restful
 import flask
 import requests
 
-import src.hsstatus as _status
+import src.resstatus as _status
 import src.res.connector as connector
 
 from src.dao.appliancedao import ApplianceDAO
@@ -37,7 +37,7 @@ class ServiceResource(flask_restful.Resource):
             reply.add_content('service', service.to_array())
 
         connection.close()
-        return flask.jsonify(reply.to_array())
+        return reply.to_array()
 
     def post(self, appliance_id, service_id):
         connection = connector.getcon()
@@ -63,14 +63,14 @@ class ServiceResource(flask_restful.Resource):
             try:
                 r = requests.get(address)
 
-                if r.status_code == '200':
+                if r.status_code == '404':
+                    reply.set_status(_status.STATUS_APPLIANCE_UNREACHABLE)
+                else:
                     reply.set_status(_status.STATUS_OK)
                     reply.add_content('service', service.to_array())
-                else:
-                    reply.set_status(_status.STATUS_APPLIANCE_UNREACHEBLE)
 
             except requests.ConnectionError:
-                reply.set_status(_status.STATUS_APPLIANCE_UNREACHEBLE)
+                reply.set_status(_status.STATUS_APPLIANCE_UNREACHABLE)
 
         connection.close()
-        return flask.jsonify(reply.to_array())
+        return reply.to_array()

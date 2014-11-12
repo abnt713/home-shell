@@ -1,11 +1,11 @@
 __author__ = 'alisonbento'
 
-import flask
 import flask_restful
-import src.res.connector as connector
 
+import src.res.connector as connector
 import src.dao.fullappliancedao as appliancedao
 import src.answer.answer
+import src.resstatus as _status
 
 
 class ApplianceListResource(flask_restful.Resource):
@@ -18,11 +18,11 @@ class ApplianceListResource(flask_restful.Resource):
         appliances = dao.list()
         reply = src.answer.answer.Answer()
         if len(appliances) > 0:
-            reply.set_status(1)
+            reply.set_status(_status.STATUS_OK)
             all_appliances = []
             for appliance in appliances:
                 all_appliances.append(appliance.to_array())
 
             reply.add_content('appliances', all_appliances)
 
-        return flask.jsonify(reply.to_array())
+        return reply.to_array()
