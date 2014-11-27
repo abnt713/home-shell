@@ -66,7 +66,6 @@ class ServiceResource(hsres.HomeShellResource):
             for param in params:
                 p_value = request.form[param.name]
                 if p_value is not None:
-                    print(param.name)
                     all_params_with_values.append(param.name + '=' + p_value)
 
             if len(all_params_with_values) > 0:

@@ -19,6 +19,8 @@ from src.res.service.listservicesresource import ListServicesResource
 from src.res.service.serviceresource import ServiceResource
 from src.res.status.liststatusresource import ListStatusResource
 from src.res.status.statusresource import StatusResource
+from src.res.extras.listextrasresource import ListExtrasResource
+from src.res.extras.extraresource import ExtraResource
 
 
 app = flask.Flask(__name__)
@@ -45,6 +47,10 @@ api.add_resource(ServiceResource, '/appliances/<int:appliance_id>/services/<serv
 # Status
 api.add_resource(ListStatusResource, '/appliances/<int:appliance_id>/status/')
 api.add_resource(StatusResource, '/appliances/<int:appliance_id>/status/<int:status_id>/')
+
+# Extras
+api.add_resource(ListExtrasResource, '/appliances/<int:appliance_id>/extras/')
+api.add_resource(ExtraResource, '/appliances/<appliance_id>/extras/<extra_key>')
 
 if __name__ == '__main__':
     app.run(port=8080, debug=configs.DEBUG_MODE)

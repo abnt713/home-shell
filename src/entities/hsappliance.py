@@ -14,6 +14,7 @@ class HomeShellAppliance(parsable.ArrayParsableEntity):
         self.address = None
         self.created = None
         self.modified = None
+        self.hash = None
 
     def to_array(self):
         return {

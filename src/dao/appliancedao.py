@@ -18,5 +18,6 @@ class ApplianceDAO(basedao.BaseDAO):
         appliance.name = entity_row['type']
         appliance.key = None
         appliance.address = entity_row['address']
+        appliance.hash = entity_row['appliance_hash']
 
         return appliance
