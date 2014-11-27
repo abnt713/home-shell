@@ -50,7 +50,7 @@ api.add_resource(StatusResource, '/appliances/<int:appliance_id>/status/<int:sta
 
 # Extras
 api.add_resource(ListExtrasResource, '/appliances/<int:appliance_id>/extras/')
-api.add_resource(ExtraResource, '/appliances/<appliance_id>/extras/<extra_key>')
+api.add_resource(ExtraResource, '/appliances/<appliance_id>/extras/<extra_key>/')
 
 if __name__ == '__main__':
     app.run(port=8080, debug=configs.DEBUG_MODE)
