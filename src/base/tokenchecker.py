@@ -1,7 +1,7 @@
 __author__ = 'alisonbento'
 
 import datetime
-import connector
+
 import configs
 from src.dao.tokendao import TokenDAO
 

@@ -2,7 +2,7 @@ __author__ = 'alisonbento'
 
 import flask_restful
 
-import src.res.connector as connector
+import src.base.connector as connector
 import src.dao.fullgroupdao as fullgroupdao
 from src.answer.answer import Answer
 import src.resstatus as _status

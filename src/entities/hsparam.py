@@ -4,10 +4,10 @@ __author__ = 'alisonbento'
 import src.base.arrayparsableentity as parsable
 
 
-class HomeShellService(parsable.ArrayParsableEntity):
+class HomeShellParam(parsable.ArrayParsableEntity):
 
-    def __init__(self, service_id=0, name=None):
-        self.id = service_id
+    def __init__(self, param_id=0, name=None):
+        self.id = param_id
         self.name = name
 
     def to_array(self):

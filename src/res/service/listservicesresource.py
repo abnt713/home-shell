@@ -1,12 +1,9 @@
 __author__ = 'alisonbento'
 
-
 import flask_restful
-import flask
 
 import src.resstatus as _status
-import src.res.connector as connector
-
+import src.base.connector as connector
 from src.dao.servicedao import ServiceDAO
 from src.answer.answer import Answer
 

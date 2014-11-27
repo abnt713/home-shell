@@ -1,20 +1,18 @@
 __author__ = 'alisonbento'
 
 import flask
-import flask_restful
 import hashlib
 import uuid
 import datetime
 
+import flask_restful
+
 import src.answer.answer
 import src.resstatus as _status
-import src.res.connector as connector
-
+import src.base.connector as connector
 import src.dao.userdao as userdao
 import src.dao.tokendao as hstokendao
-
 import src.entities.token.hstoken as hstoken
-
 import configs
 
 

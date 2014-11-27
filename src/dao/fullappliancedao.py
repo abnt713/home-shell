@@ -3,7 +3,7 @@ __author__ = 'alisonbento'
 import abstractdao
 
 import appliancedao as hsappliancedao
-import servicedao as hsservicedao
+import fullservicedao as hsservicedao
 import statusdao as hsstatusdao
 import src.entities.hsfullappliance as hsfullappliance
 
@@ -12,7 +12,7 @@ class FullApplianceDAO(abstractdao.AbstractDAO):
 
     def list(self, criteria=None, arguments=()):
         appliancedao = hsappliancedao.ApplianceDAO(self.connection)
-        servicedao = hsservicedao.ServiceDAO(self.connection)
+        servicedao = hsservicedao.FullServiceDAO(self.connection)
         statusdao = hsstatusdao.StatusDAO(self.connection)
 
         all_appliances = appliancedao.list(criteria, arguments)
@@ -40,7 +40,7 @@ class FullApplianceDAO(abstractdao.AbstractDAO):
         if fullappliance.appliance is None:
             return None
 
-        servicedao = hsservicedao.ServiceDAO(self.connection)
+        servicedao = hsservicedao.FullServiceDAO(self.connection)
         fullappliance.services = servicedao.list("appliance_id = ?", (entity_id,))
 
         statusdao = hsstatusdao.StatusDAO(self.connection)

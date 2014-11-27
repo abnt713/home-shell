@@ -1,13 +1,11 @@
 __author__ = 'alisonbento'
 
-import flask
 import flask_restful
 
-import src.res.connector as connector
+import src.base.connector as connector
 import src.answer.answer as hsanswer
-import src.res.tokenchecker as tokenchecker
+import src.base.tokenchecker as tokenchecker
 import src.resstatus as _status
-
 import configs
 
 

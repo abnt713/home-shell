@@ -1,6 +1,6 @@
 __author__ = 'alisonbento'
 
-import src.requestentity.arrayparsableentity as parsable
+import src.base.arrayparsableentity as parsable
 import configs
 import src.resstatus as _status
 
@@ -18,12 +18,12 @@ class Answer(parsable.ArrayParsableEntity):
 
     def to_array(self):
         array = {
-            "status": self.status,
+            "status": self.status[0],
             "contents": self.contents
         }
 
         if configs.ANSWER_HUMAN_MODE:
-            message = _status.RES_DICT[self.status]
+            message = self.status[1]
             array.update({'message': message})
 
         return array

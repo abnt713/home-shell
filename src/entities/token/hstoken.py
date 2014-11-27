@@ -1,7 +1,7 @@
 __author__ = 'alisonbento'
 
 
-import src.requestentity.arrayparsableentity as parsable
+import src.base.arrayparsableentity as parsable
 
 
 class HomeShellToken(parsable.ArrayParsableEntity):

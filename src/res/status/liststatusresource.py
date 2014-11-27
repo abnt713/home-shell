@@ -1,11 +1,9 @@
 __author__ = 'alisonbento'
 
-import flask
-
 import flask_restful
 
 import src.resstatus as _status
-import src.res.connector
+import src.base.connector
 from src.dao.statusdao import StatusDAO
 from src.answer.answer import Answer
 
@@ -13,7 +11,7 @@ from src.answer.answer import Answer
 class ListStatusResource(flask_restful.Resource):
 
     def get(self, appliance_id):
-        connection = src.res.connector.getcon()
+        connection = src.base.connector.getcon()
         dao = StatusDAO(connection)
 
         status = dao.list("appliance_id = " + str(appliance_id))
