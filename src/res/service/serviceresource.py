@@ -8,11 +8,11 @@ import src.res.hsres as hsres
 
 import src.resstatus as _status
 
-from src.dao.fullappliancedao import FullApplianceDAO
 from src.dao.appliancedao import ApplianceDAO
 from src.dao.servicedao import ServiceDAO
 from src.dao.paramdao import ParamDAO
 from src.dao.statusdao import StatusDAO
+from src.appliances.statusupdater import StatusUpdater
 
 from flask import request
 
@@ -42,8 +42,6 @@ class ServiceResource(hsres.HomeShellResource):
         return self.end()
 
     def post(self, appliance_id, service_id):
-        appliancedao = ApplianceDAO(self.get_dbc())
-        fullappliancedao = FullApplianceDAO(self.get_dbc())
         servicedao = ServiceDAO(self.get_dbc())
 
         if service_id.isdigit():
@@ -74,8 +72,8 @@ class ServiceResource(hsres.HomeShellResource):
             else:
                 param_string = ''
 
+            appliancedao = ApplianceDAO(self.get_dbc())
             appliance = appliancedao.get(appliance_id)
-            current_time = datetime.datetime.now()
             # address = 'http://' + appliance.address + '/services/' + service.name + '/' + param_string
             address = 'http://' + appliance.address + '/services/' + service.name + param_string
 
@@ -85,24 +83,15 @@ class ServiceResource(hsres.HomeShellResource):
                 if r.status_code == '404':
                     self.set_status(_status.STATUS_APPLIANCE_UNREACHABLE)
                 elif r.status_code:
-
-                    # Update status
                     print(r.text)
+                    # Update status
+                    updater = StatusUpdater(self.get_dbc())
                     appjson = r.json()
-                    statusdao = StatusDAO(self.get_dbc())
-
-                    if 'status' in appjson:
-                        statusjson = appjson['status']
-                    else:
-                        statusjson = appjson
-
-                    statusdao.update_appliance_status(statusjson, appliance_id)
-                    appliance.modified = current_time.strftime(configs.DATABASE_DATE_FORMAT)
-                    appliancedao.update(appliance)
-                    self.get_dbc().commit()
-                    fullappliance = fullappliancedao.get(appliance_id)
+                    fullappliance = updater.updateStatus(appliance, appjson)
                     self.set_status(_status.STATUS_OK)
                     self.add_content('appliance', fullappliance.to_array())
+
+                    
 
             except requests.ConnectionError:
                 self.set_status(_status.STATUS_APPLIANCE_UNREACHABLE)
