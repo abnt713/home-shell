@@ -2,7 +2,8 @@ __author__ = 'alisonbento'
 
 import basedao
 from src.entities.hsappliance import HomeShellAppliance
-
+import datetime
+import configs
 
 class ApplianceDAO(basedao.BaseDAO):
 
@@ -19,6 +20,8 @@ class ApplianceDAO(basedao.BaseDAO):
         appliance.key = None
         appliance.address = entity_row['address']
         appliance.hash = entity_row['appliance_hash']
+        appliance.modified = entity_row['modified']
+        appliance.modified_datetime = datetime.datetime.strptime(appliance.modified, configs.DATABASE_DATE_FORMAT)
 
         return appliance
 
