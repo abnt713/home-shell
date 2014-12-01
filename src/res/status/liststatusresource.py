@@ -1,14 +1,16 @@
 __author__ = 'alisonbento'
 
-import flask_restful
+import requests
 
+import src.res.hsres as hsres
 import src.resstatus as _status
 import src.base.connector
+from src.dao.appliancedao import ApplianceDAO
 from src.dao.statusdao import StatusDAO
 from src.answer.answer import Answer
 
 
-class ListStatusResource(flask_restful.Resource):
+class ListStatusResource(hsres.HomeShellResource):
 
     def get(self, appliance_id):
         connection = src.base.connector.getcon()
@@ -31,3 +33,25 @@ class ListStatusResource(flask_restful.Resource):
 
         connection.close()
         return reply.to_array()
+
+    def post(self, appliance_id):
+        appliancedao = ApplianceDAO(self.get_dbc())
+
+        appliance_list = appliancedao.select('appliance_hash = ?', (appliance_id,))
+        if len(appliance_list) <= 0:
+            self.set_status(_status.STATUS_APPLIANCE_NOT_FOUND)
+            return self.end()
+
+        appliance = appliance_list[0]
+
+        address = 'http://' + appliance.address + '/status/'
+        r = requests.get(address)
+
+        appjson = r.json()
+
+        statusdao = StatusDAO(self.get_dbc())
+        statusdao.update_appliance_status(appjson, appliance.id)
+
+        self.get_dbc().commit()
+        self.set_status(_status.STATUS_OK)
+        return self.end()

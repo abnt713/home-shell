@@ -21,3 +21,9 @@ class ApplianceDAO(basedao.BaseDAO):
         appliance.hash = entity_row['appliance_hash']
 
         return appliance
+
+    def update(self, entity):
+        cursor = self.connection.cursor()
+
+        sql = "UPDATE " + self.table + " SET modified = ? WHERE appliance_id = ?"
+        cursor.execute(sql, (entity.modified, entity.id))

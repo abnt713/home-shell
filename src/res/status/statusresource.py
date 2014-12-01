@@ -25,3 +25,5 @@ class StatusResource(flask_restful.Resource):
 
         connection.close()
         return reply.to_array()
+
+

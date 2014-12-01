@@ -1,17 +1,18 @@
 __author__ = 'alisonbento'
 
 import requests
+import datetime
 
+import configs
 import src.res.hsres as hsres
 
 import src.resstatus as _status
-import src.base.connector as connector
 
+from src.dao.fullappliancedao import FullApplianceDAO
 from src.dao.appliancedao import ApplianceDAO
 from src.dao.servicedao import ServiceDAO
 from src.dao.paramdao import ParamDAO
-
-from src.answer.answer import Answer
+from src.dao.statusdao import StatusDAO
 
 from flask import request
 
@@ -41,9 +42,9 @@ class ServiceResource(hsres.HomeShellResource):
         return self.end()
 
     def post(self, appliance_id, service_id):
-        connection = connector.getcon()
-        appliancedao = ApplianceDAO(connection)
-        servicedao = ServiceDAO(connection)
+        appliancedao = ApplianceDAO(self.get_dbc())
+        fullappliancedao = FullApplianceDAO(self.get_dbc())
+        servicedao = ServiceDAO(self.get_dbc())
 
         if service_id.isdigit():
             service = servicedao.get(service_id, "appliance_id = " + str(appliance_id))
@@ -54,12 +55,11 @@ class ServiceResource(hsres.HomeShellResource):
             else:
                 service = None
 
-        reply = Answer()
         if service is None:
-            reply.set_status(_status.STATUS_APPLIANCE_NOT_FOUND)
-            return
+            self.set_status(_status.STATUS_APPLIANCE_NOT_FOUND)
+            return self.end()
         else:
-            paramdao = ParamDAO(connection)
+            paramdao = ParamDAO(self.get_dbc())
             params = paramdao.select("service_id = ?", (service.id,))
 
             all_params_with_values = []
@@ -70,25 +70,42 @@ class ServiceResource(hsres.HomeShellResource):
 
             if len(all_params_with_values) > 0:
                 param_string = '&'.join(all_params_with_values)
+                param_string = '?' + param_string
             else:
                 param_string = ''
 
-
             appliance = appliancedao.get(appliance_id)
-            address = 'http://' + appliance.address + '/services/' + service.name + '/?' + param_string
-            print(address)
+            current_time = datetime.datetime.now()
+            # address = 'http://' + appliance.address + '/services/' + service.name + '/' + param_string
+            address = 'http://' + appliance.address + '/services/' + service.name + param_string
 
             try:
                 r = requests.get(address)
 
                 if r.status_code == '404':
-                    reply.set_status(_status.STATUS_APPLIANCE_UNREACHABLE)
-                else:
-                    reply.set_status(_status.STATUS_OK)
-                    reply.add_content('service', service.to_array())
+                    self.set_status(_status.STATUS_APPLIANCE_UNREACHABLE)
+                elif r.status_code:
+
+                    # Update status
+                    print(r.text)
+                    appjson = r.json()
+                    statusdao = StatusDAO(self.get_dbc())
+
+                    if 'status' in appjson:
+                        statusjson = appjson['status']
+                    else:
+                        statusjson = appjson
+
+                    statusdao.update_appliance_status(statusjson, appliance_id)
+                    appliance.modified = current_time.strftime(configs.DATABASE_DATE_FORMAT)
+                    appliancedao.update(appliance)
+                    self.get_dbc().commit()
+                    fullappliance = fullappliancedao.get(appliance_id)
+                    self.set_status(_status.STATUS_OK)
+                    self.add_content('appliance', fullappliance.to_array())
 
             except requests.ConnectionError:
-                reply.set_status(_status.STATUS_APPLIANCE_UNREACHABLE)
+                self.set_status(_status.STATUS_APPLIANCE_UNREACHABLE)
+                self.get_dbc().rollback()
 
-        connection.close()
-        return reply.to_array()
+        return self.end()

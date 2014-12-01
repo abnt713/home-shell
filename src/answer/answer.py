@@ -17,6 +17,7 @@ class Answer(parsable.ArrayParsableEntity):
         self.contents.update({index: content})
 
     def to_array(self):
+        print(self.status)
         array = {
             "status": self.status[0],
             "contents": self.contents
