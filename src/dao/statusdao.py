@@ -34,8 +34,7 @@ class StatusDAO(basedao.BaseDAO):
 
     def update_appliance_status(self, appjson, appliance_id):
         for status, value in appjson.items():
-            print(status)
-            print(value)
+            print("try update status " + str(status) + " to value: " + str(value))
             basestatus = self.get_status_by_name(status, appliance_id)
             if basestatus is not None:
                 print('updating ' + str(status))
