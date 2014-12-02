@@ -91,10 +91,9 @@ class ServiceResource(hsres.HomeShellResource):
                     self.set_status(_status.STATUS_OK)
                     self.add_content('appliance', fullappliance.to_array())
 
-                    
-
             except requests.ConnectionError:
                 self.set_status(_status.STATUS_APPLIANCE_UNREACHABLE)
                 self.get_dbc().rollback()
+            
 
         return self.end()
