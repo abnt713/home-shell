@@ -2,8 +2,7 @@ __author__ = 'alisonbento'
 
 import time
 
-import src.res.hsres as hsres
-
+import hsres
 import src.resstatus as _status
 
 from src.entities.hsextra import HomeShellExtra
@@ -67,5 +66,28 @@ class ExtraResource(hsres.HomeShellResource):
         else:
             self.get_dbc().rollback()
             self.set_status(_status.STATUS_GENERAL_ERROR)
+
+        return self.end()
+
+
+class ListExtrasResource(hsres.HomeShellResource):
+
+    def get(self, appliance_id):
+        appliancedao = ApplianceDAO(self.get_dbc())
+        appliance = appliancedao.get(appliance_id)
+
+        if appliance is None:
+            self.set_status(_status.STATUS_APPLIANCE_NOT_FOUND)
+            return self.end()
+
+        extradao = ExtraDAO(self.get_dbc())
+        all_extras = extradao.list('appliance_id = ?', (appliance.id,))
+
+        parsed_extras = []
+        for extra in all_extras:
+            parsed_extras.append(extra.to_array())
+
+        self.set_status(_status.STATUS_OK)
+        self.add_content('extras', parsed_extras)
 
         return self.end()

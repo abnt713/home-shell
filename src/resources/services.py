@@ -1,20 +1,37 @@
 __author__ = 'alisonbento'
 
+import flask_restful
 import requests
-import datetime
-
-import configs
-import src.res.hsres as hsres
+import hsres
 
 import src.resstatus as _status
 
+from src.appliances.statusupdater import StatusUpdater
 from src.dao.appliancedao import ApplianceDAO
 from src.dao.servicedao import ServiceDAO
 from src.dao.paramdao import ParamDAO
-from src.dao.statusdao import StatusDAO
-from src.appliances.statusupdater import StatusUpdater
 
-from flask import request
+
+class ListServicesResource(hsres.HomeShellResource):
+
+    def get(self, appliance_id):
+
+        dao = ServiceDAO(self.get_dbc())
+
+        services = dao.list("appliance_id = ?", (appliance_id,))
+
+        if len(services) > 0:
+            self.set_status(_status.STATUS_OK)
+            all_services = []
+            for service in services:
+                all_services.append(service.to_array())
+
+            self.add_content('services', all_services)
+
+        else:
+            self.set_status(_status.STATUS_GENERAL_ERROR)
+
+        return self.end()
 
 
 class ServiceResource(hsres.HomeShellResource):
@@ -62,7 +79,7 @@ class ServiceResource(hsres.HomeShellResource):
 
             all_params_with_values = []
             for param in params:
-                p_value = request.form[param.name]
+                p_value = flask_restful.request.form[param.name]
                 if p_value is not None:
                     all_params_with_values.append(param.name + '=' + p_value)
 
@@ -94,6 +111,6 @@ class ServiceResource(hsres.HomeShellResource):
             except requests.ConnectionError:
                 self.set_status(_status.STATUS_APPLIANCE_UNREACHABLE)
                 self.get_dbc().rollback()
-            
+
 
         return self.end()

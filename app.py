@@ -3,24 +3,12 @@ __author__ = 'alisonbento'
 
 import flask
 
-import flask_restful
-
-import configs
-
-from src.res.common.indexresource import IndexResource
-from src.res.common.requesttokenresource import RequestTokenResource
-
-from src.res.group.listgroupsresource import ListGroupResource
-from src.res.group.groupresource import GroupResource
-
-from src.res.appliance.appliancelistresource import ApplianceListResource
-from src.res.appliance.applianceresource import ApplianceResource
-from src.res.service.listservicesresource import ListServicesResource
-from src.res.service.serviceresource import ServiceResource
-from src.res.status.liststatusresource import ListStatusResource
-from src.res.status.statusresource import StatusResource
-from src.res.extras.listextrasresource import ListExtrasResource
-from src.res.extras.extraresource import ExtraResource
+from src.resources.appliances import *
+from src.resources.common import *
+from src.resources.extras import *
+from src.resources.groups import *
+from src.resources.services import *
+from src.resources.status import *
 
 
 app = flask.Flask(__name__)
@@ -55,5 +43,5 @@ api.add_resource(ListExtrasResource, '/appliances/<int:appliance_id>/extras/')
 api.add_resource(ExtraResource, '/appliances/<appliance_id>/extras/<extra_key>/')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=8080, debug=configs.DEBUG_MODE)
+    app.run(host='0.0.0.0', port=8080, debug=configs.DEBUG_MODE)
     #app.run(port=8080, debug=configs.DEBUG_MODE)
