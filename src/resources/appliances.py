@@ -1,8 +1,10 @@
 __author__ = 'alisonbento'
 
+import nmap
 import src.resources.hsres as hsres
 
 import src.dao.fullappliancedao as fullappliancedao
+import src.dao.appliancedao as appliancedao
 import src.resstatus as _status
 import requests
 import datetime
@@ -70,3 +72,35 @@ class ApplianceResource(hsres.HomeShellResource):
         delta_seconds = delta.total_seconds()
 
         return delta_seconds >= configs.MIN_SECONDS_TO_REFRESH_APPLIANCE
+
+
+class ScanAppliancesResource(hsres.HomeShellResource):
+
+    def get(self):
+        hsappliancedao = appliancedao.ApplianceDAO(self.get_dbc())
+
+        all_appliances = hsappliancedao.list()
+
+        already_know_hosts = []
+        for appliance in all_appliances:
+            already_know_hosts.append(appliance.address)
+
+        nm = nmap.PortScanner()
+        nm.scan(hosts=configs.NETWORK_IP_RANGE, arguments='-n -sP -PE -PA21,23,80,3389')
+        hosts_list = [(x, nm[x]['status']['state']) for x in nm.all_hosts()]
+
+        valid_hosts = []
+        for host, status in hosts_list:
+            try:
+                address = 'http://' + host
+                r = requests.get(address)
+                r.json()
+                if host not in already_know_hosts:
+                    valid_hosts.append(host)
+            except:
+                pass
+
+        self.set_status(_status.STATUS_OK)
+        self.add_content('new_appliances', len(valid_hosts))
+
+        return self.end()

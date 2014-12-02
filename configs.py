@@ -6,6 +6,7 @@ VERSION = '0.0.1'
 DATABASE = 'database/homeshell.db'
 DATABASE_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 HEADER_AUTH_INDEX = 'hs-auth-key'
+NETWORK_IP_RANGE = '192.168.0.0/24'
 
 # OKAY, now you can freely change whatever you like
 

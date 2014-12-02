@@ -24,7 +24,7 @@ class IndexResource(hsres.HomeShellResource):
             self.set_status(_status.STATUS_TOKEN_INVALID)
             return self.end()
 
-        self.set_status(1)
+        self.set_status(_status.STATUS_OK)
         self.add_content('version', configs.VERSION)
         self.add_content('user', valid_token.user_id)
 
@@ -39,9 +39,10 @@ class RequestTokenResource(hsres.HomeShellResource):
         if valid_token is None:
             self.set_status(_status.STATUS_TOKEN_INVALID)
             return self.end()
-
-        self.set_status(_status.STATUS_INVALID_REQUEST)
-        return self.end()
+        else:
+            self.set_status(_status.STATUS_OK)
+            self.add_content('valid', valid_token.valid)
+            return self.end()
 
     def post(self):
         username = flask_restful.request.form.get('username')

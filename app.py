@@ -27,6 +27,7 @@ api.add_resource(GroupResource, '/groups/<int:group_id>/')
 # Appliances
 api.add_resource(ApplianceListResource, '/appliances/')
 api.add_resource(ApplianceResource, '/appliances/<int:appliance_id>/', endpoint='appliances')
+api.add_resource(ScanAppliancesResource, '/appliances/scan/')
 
 
 # Services
@@ -35,7 +36,6 @@ api.add_resource(ServiceResource, '/appliances/<int:appliance_id>/services/<serv
 
 # Status
 api.add_resource(ListStatusResource, '/appliances/<appliance_id>/status/')
-# api.add_resource(StatusResource, '/appliances/connect/')
 api.add_resource(StatusResource, '/appliances/<int:appliance_id>/status/<int:status_id>/')
 
 # Extras
