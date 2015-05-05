@@ -17,9 +17,10 @@ class HomeShellFullAppliance(parsable.ArrayParsableEntity):
         for service in self.services:
             all_services.append(service.to_array())
 
-        all_status = []
+        all_status = {}
         for single_status in self.status:
-            all_status.append(single_status.to_array())
+            all_status[single_status.name] = single_status.value
+            # all_status.append(single_status.to_array())
 
         appliance_array.update({'services': all_services})
         appliance_array.update({'status': all_status})

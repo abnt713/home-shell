@@ -3,6 +3,7 @@ __author__ = 'alisonbento'
 
 import flask
 
+from flask_cors import CORS
 from src.resources.appliances import *
 from src.resources.common import *
 from src.resources.extras import *
@@ -12,6 +13,7 @@ from src.resources.status import *
 
 
 app = flask.Flask(__name__)
+cors = CORS(app)
 api = flask_restful.Api(app)
 
 # Index
