@@ -47,7 +47,7 @@ api.add_resource(ListExtrasResource, '/appliances/<int:appliance_id>/extras/')
 api.add_resource(ExtraResource, '/appliances/<appliance_id>/extras/<extra_key>/')
 
 # Schemes
-api.add_resource(SchemesResource, '/appliances/schemes/')
+api.add_resource(SchemesResource, '/schemes/')
 
 # Event
 api.add_resource(EventResource, '/event/<appliance_id>/')

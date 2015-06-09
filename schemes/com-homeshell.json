@@ -14,12 +14,10 @@
           },
           "event-callbacks" : {
             "on" : {
-              "method" : "POST",
-              "url" : "/services/ligar"
+              "service" : "ligar"
             },
             "off" : {
-              "method" : "POST",
-              "url" : "/services/desligar"
+              "service" : "desligar"
             }
           }
         },
@@ -36,9 +34,8 @@
           },
           "event-callbacks" : {
             "*" : {
-              "method" : "POST",
-              "url" : "/services/bright",
-              "params": [ "brilho" ]
+              "service" : "definir_brilho",
+              "param":  "brilho"
             }
           }
         }
@@ -58,12 +55,10 @@
           },
           "event-callbacks" : {
             "on" : {
-              "method" : "POST",
-              "url" : "/services/abrir"
+              "service" : "abrir"
             },
             "off" : {
-              "method" : "POST",
-              "url" : "/services/fechar"
+              "service" : "fechar"
             }
           }
         },
@@ -78,12 +73,10 @@
           },
           "event-callbacks" : {
             "on" : {
-              "method" : "POST",
-              "url" : "/services/trancar"
+              "service" : "trancar"
             },
             "off" : {
-              "method" : "POST",
-              "url" : "/services/destrancar"
+              "service" : "destrancar"
             }
           }
         }
@@ -105,9 +98,8 @@
           },
           "event-callbacks" : {
             "*" : {
-              "method" : "POST",
-              "url" : "/services/change-velocity",
-              "params": [ "velocity" ]
+              "service" : "change-velocity",
+              "param": "velocity"
             }
           }
         }
@@ -127,8 +119,7 @@
           },
           "event-callbacks" : {
             "*" : {
-              "method" : "POST",
-              "url" : "/services/change-temperature",
+              "service" : "change-temperature",
               "param": "temperature"
             }
           }
@@ -148,8 +139,7 @@
           },
           "event-callbacks" : {
             "*" : {
-              "method" : "POST",
-              "url" : "/services/change-mode",
+              "service" : "change-mode",
               "param": "mode"
             }
           }
@@ -170,8 +160,7 @@
           },
           "event-callbacks" : {
             "*" : {
-              "method" : "POST",
-              "url" : "/services/change-channel",
+              "service" : "change-channel",
               "param": "channel"
             }
           }
@@ -189,9 +178,7 @@
           },
           "event-callbacks" : {
             "*" : {
-              "method" : "POST",
-              "url" : "/services/change-volume",
-              "params": [ "volume" ]
+              "service" : "change-volume"
             }
           }
         },
@@ -204,9 +191,7 @@
           },
           "event-callbacks" : {
             "*" : {
-              "method" : "POST",
-              "url" : "/services/mute",
-              "params": []
+              "service" : "mute"
             }
           }
         }
