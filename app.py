@@ -10,6 +10,8 @@ from src.resources.extras import *
 from src.resources.groups import *
 from src.resources.services import *
 from src.resources.status import *
+from src.resources.schemes import *
+from src.resources.event import *
 
 
 app = flask.Flask(__name__)
@@ -43,6 +45,12 @@ api.add_resource(StatusResource, '/appliances/<int:appliance_id>/status/<int:sta
 # Extras
 api.add_resource(ListExtrasResource, '/appliances/<int:appliance_id>/extras/')
 api.add_resource(ExtraResource, '/appliances/<appliance_id>/extras/<extra_key>/')
+
+# Schemes
+api.add_resource(SchemesResource, '/appliances/schemes/')
+
+# Event
+api.add_resource(EventResource, '/event/<appliance_id>/')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=configs.DEBUG_MODE)
