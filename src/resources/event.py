@@ -1,6 +1,7 @@
 __author__ = 'alisonbento'
 
 import flask_restful
+from flask_restful import reqparse
 import hsres
 from src.dao.appliancedao import ApplianceDAO
 import src.resstatus as _status
@@ -20,6 +21,12 @@ class EventResource(hsres.HomeShellResource):
         }
 
     def post(self, appliance_id):
+        parser = reqparse.RequestParser()
+        parser.add_argument('control_id', type=str)
+        parser.add_argument('value', type=str)
+        parser.add_argument('callback_key', type=str)
+        args = parser.parse_args()
+
         # Preciso da appliance e seu scheme
         dao = ApplianceDAO(self.get_dbc())
         appliance = dao.get(appliance_id)
@@ -28,7 +35,7 @@ class EventResource(hsres.HomeShellResource):
         real_package = appliance_package + '.' + appliance.type
         scheme = loader.get_scheme(real_package)
         # Em seguida preciso achar o control que foi modificado
-        control_id = flask_restful.request.form['control_id']
+        control_id = args['control_id']
         control = None
         for single_control in scheme['controls']:
             if single_control['id'] == control_id:
@@ -36,14 +43,14 @@ class EventResource(hsres.HomeShellResource):
                 break
 
         # Por fim, devo verificar o callback associado ao novo estado do control
-        callback_key = flask_restful.request.form['callback_key']
+        callback_key = args['callback_key']
         callback = control['event-callbacks'][callback_key]
 
         if 'param' in callback:
-            if 'value' not in flask_restful.request.form:
+            if 'value' not in args:
                 self.set_status(_status.STATUS_SERVICE_REQUIRE_PARAMETER)
                 return self.end()
-            value = flask_restful.request.form['value']
+            value = args['value']
             form = {callback['param']: value}
         else:
             form = {}
