@@ -53,5 +53,5 @@ api.add_resource(SchemesResource, '/appliances/schemes/')
 api.add_resource(EventResource, '/event/<appliance_id>/')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=configs.DEBUG_MODE)
+    app.run(host='0.0.0.0', port=8081, debug=configs.DEBUG_MODE)
     #app.run(port=8080, debug=configs.DEBUG_MODE)

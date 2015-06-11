@@ -50,10 +50,12 @@
           "id" : "open",
           "label" : "Abrir/Fechar",
           "type" : "toggle",
-          "bind-status" : "aberta",
+          "bind-status" : "open",
           "params" : {
             "on-label" : "Aberta",
-            "off-label" : "Fechada"
+            "off-label" : "Fechada",
+            "true-value" : 1,
+            "false-value" : 0
           },
           "event-callbacks" : {
             "on" : {
@@ -68,10 +70,12 @@
           "id" : "lock",
           "label" : "Trancar/Destrancar",
           "type" : "toggle",
-          "bind-status" : "trancada",
+          "bind-status" : "locked",
           "params" : {
             "on-label" : "Trancada",
-            "off-label" : "Destrancada"
+            "off-label" : "Destrancada",
+            "true-value" : 1,
+            "false-value" : 0
           },
           "event-callbacks" : {
             "on" : {
